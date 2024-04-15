@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 300;
+}
+:focus {
+  outline: 0;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
