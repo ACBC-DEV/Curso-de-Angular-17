@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './labs.component.css',
 })
 export class LabsComponent {
-  title = 'todoapp';
   welcom = 'Welcome todoApp';
+  name = 'RAUL';
   tasks = ['First task', 'Second task', 'Third task'];
 }
