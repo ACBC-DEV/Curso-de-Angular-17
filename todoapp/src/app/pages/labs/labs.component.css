@@ -1,0 +1,12 @@
+.list-name {
+  place-content: center;
+  display: grid;
+  gap: 5px;
+}
+.list-name p {
+  margin: 0;
+}
+.img-icon {
+  display: block;
+  margin: 0 auto;
+}

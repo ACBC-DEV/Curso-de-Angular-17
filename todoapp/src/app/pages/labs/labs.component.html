@@ -8,3 +8,14 @@
 <h2>{{ "Hola ".repeat(4) }}</h2>
 <p>la suma es 6 + 4 = {{ 6 + 4 }}</p>
 <p>Hola soy {{ name }}</p>
+
+<hr />
+<img [src]="img" alt="" class="img-icon" />
+<input type="text" [value]="name" />
+<button [disabled]="disable">Click me!</button>
+
+<div class="list-name">
+  <p>person {{ person.name }}</p>
+  <p>age {{ person.age }}</p>
+  <p>job {{ person.job }}</p>
+</div>
