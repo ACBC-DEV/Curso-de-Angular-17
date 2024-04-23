@@ -1,21 +1,53 @@
-<h1>{{ welcom }}</h1>
-<ul>
-  <ng-container>
-    <li *ngFor="let task of tasks">{{ task }}</li>
-  </ng-container>
-</ul>
-<hr />
-<h2>{{ "Hola ".repeat(4) }}</h2>
-<p>la suma es 6 + 4 = {{ 6 + 4 }}</p>
-<p>Hola soy {{ name }}</p>
+<section>
+  <h1>{{ welcom }}</h1>
+  <ul>
+    <ng-container>
+      <li *ngFor="let task of tasks()">{{ task }}</li>
+    </ng-container>
+  </ul>
+  <hr />
+  <h2>{{ "Hola ".repeat(4) }}</h2>
+  <p>la suma es 6 + 4 = {{ 6 + 4 }}</p>
+  <p>Hola soy {{ name() }}</p>
 
-<hr />
-<img [src]="img" alt="" class="img-icon" />
-<input type="text" [value]="name" />
-<button [disabled]="disable">Click me!</button>
+  <hr />
+  <img [src]="img" alt="" class="img-icon" />
+  <input type="text" [value]="name()" />
+  <button [disabled]="disable">Click me!</button>
 
-<div class="list-name">
-  <p>person {{ person.name }}</p>
-  <p>age {{ person.age }}</p>
-  <p>job {{ person.job }}</p>
-</div>
+  <div class="list-name">
+    <p>person {{ person().name }}</p>
+    <p>age {{ person().age }}</p>
+    <p>job {{ person().job }}</p>
+  </div>
+  <hr />
+  <button class="btn-click" style="margin-right: 5px" (click)="clickHandler()">
+    Click Me
+  </button>
+  <button class="btn-click" (dblclick)="clickHandler()">Double Me</button>
+  <p>(change)</p>
+  <input type="number" (change)="changeHandler($event)" />
+
+  <p>(change)</p>
+  <input type="text" [value]="name()" (change)="changeHandler($event)" />
+
+  <p>(keydown)</p>
+  <input type="text" [value]="person.name" (keydown)="keydownHandler($event)" />
+  <p>(keydown shift)</p>
+  <input type="text" [value]="person.name" (keydown.shift.t)="clickHandler()" />
+  <hr />
+  <h1>Signals</h1>
+  <input type="text" [value]="name()" (change)="changeHandler($event)" />
+  <p>name: {{ name() }}</p>
+  <p>totals: {{ tasks().length }}</p>
+  <li *ngFor="let task of tasks(); index as i">{{ i + 1 }} {{ task }}</li>
+  <hr />
+  <button class="btn-click" (click)="changeAge()">Change Age</button>
+  @if (name() === "ACBC") {
+  <div>Works</div>
+  }
+  <div *ngIf="person().age > 18; else elseBlock">
+    <p>Person is older than 18 y su edad es {{ person().age }}</p>
+  </div>
+  <ng-template #elseBlock> is menor de edad </ng-template>
+</section>
