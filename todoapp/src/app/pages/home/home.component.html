@@ -5,6 +5,7 @@
       <p>All my tasks in one place</p>
       <input
         class="new-todo"
+        (keydown.enter)="changeHandler($event)"
         placeholder="Type new todo"
         autofocus
         type="text"
@@ -13,31 +14,26 @@
   </header>
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
+    <!-- <pre>
+      <code>
+        {{ tasks() | json }}
+      </code>
+    </pre> -->
+
     <section class="main">
       <ul class="todo-list">
-        <li class="completed">
+        <li *ngFor="let task of tasks(); index as i">
           <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label>Learn JavaScript</label>
-            <button class="destroy"></button>
+            <input
+              class="toggle"
+              type="checkbox"
+              [checked]="task.completed"
+              (click)="toggleCheck(i)"
+            />
+            <label>{{ task.title }}</label>
+            <button class="destroy" (click)="deleteTask(i)"></button>
           </div>
-          <input class="edit" value="Learn JavaScript" />
-        </li>
-        <li>
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Buy a unicorn</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Buy a unicorn" />
-        </li>
-        <li class="editing">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Make dishes</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Make dishes" />
+          <input class="edit" value="{{ task.title }}" />
         </li>
       </ul>
     </section>
@@ -45,7 +41,8 @@
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
       <span class="todo-count" style="color: #333"
-        ><strong>0</strong> item left</span
+        ><strong>{{ itemsLeft() }}</strong> @if(itemsLeft()>1){ items }@else {
+        item } left</span
       >
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
