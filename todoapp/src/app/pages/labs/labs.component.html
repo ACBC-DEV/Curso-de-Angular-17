@@ -1,4 +1,5 @@
 <section>
+  <a href="/">Go Home</a>
   <h1>{{ welcom }}</h1>
   <ul>
     <ng-container>
@@ -50,4 +51,50 @@
     <p>Person is older than 18 y su edad es {{ person().age }}</p>
   </div>
   <ng-template #elseBlock> is menor de edad </ng-template>
+  <hr />
+  <div [ngSwitch]="person().name">
+    <div *ngSwitchCase="'ACBC'">ACBC</div>
+    <div *ngSwitchCase="'Raul'">Jhon</div>
+    <div *ngSwitchDefault>Default</div>
+  </div>
+  <hr />
+  <input
+    type="color"
+    [formControl]="colorCtrl"
+    [value]="name()"
+    (change)="changeHandler($event)"
+  />
+  <p>
+    color: <span [style.color]="colorCtrl.value">{{ colorCtrl.value }}</span>
+  </p>
+  <hr />
+  <svg>
+    <g>
+      <rect
+        x="10"
+        y="10"
+        width="100"
+        height="100"
+        [attr.fill]="colorCtrl.value"
+      />
+    </g>
+  </svg>
+  <input type="number" [formControl]="widthCtrl" />
+  <span
+    class="box"
+    [style.width.px]="widthCtrl.value"
+    [style.background]="colorCtrl.value"
+  >
+  </span>
+  <hr />
+  <input type="text" [formControl]="nameCtrl" />
+  <br />
+  <span
+    class="message-error"
+    [class.show]="nameCtrl.invalid && nameCtrl.touched"
+    >Nombre Invalido</span
+  >
+  <p>
+    <input type="text" />
+  </p>
 </section>

@@ -364,3 +364,14 @@ html .clear-completed:active {
     bottom: 10px;
   }
 }
+.links {
+  display: grid;
+  place-items: center;
+  & a {
+    color: red;
+    transition: all 0.2s;
+    &:hover {
+      color: #4c33b1;
+    }
+  }
+}

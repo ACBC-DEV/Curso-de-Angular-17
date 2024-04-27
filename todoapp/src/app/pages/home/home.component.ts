@@ -1,45 +1,77 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { Task } from '../../types/taks.model';
+import {
+  Component,
+  computed,
+  signal,
+  effect,
+  inject,
+  Injector,
+} from '@angular/core';
+import { Task, type Tfilter } from '../../types/taks.model';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, CommonModule],
+  imports: [NgFor, CommonModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: crypto.randomUUID(),
-      title: 'Task 1',
-      completed: false,
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Task 2',
-      completed: false,
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Task 3',
-      completed: true,
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Task 4',
-      completed: false,
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Task 5',
-      completed: false,
-    },
-  ]);
-  changeHandler(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.addTask(input.value);
-    input.value = '';
+  tasks = signal<Task[]>([]);
+  newTaskCtrl = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.minLength(3)],
+  });
+  // updateTaskCtrl = new FormControl('', {
+  //   nonNullable: true,
+  //   validators: [Validators.required, Validators.minLength(3)],
+  // });
+  filter = signal<Tfilter>('all');
+  taskByFilter = computed(() => {
+    const filter = this.filter();
+    if (filter === 'pending') {
+      return this.tasks().filter((task) => !task.completed);
+    }
+
+    if (filter === 'completed') {
+      return this.tasks().filter((task) => task.completed);
+    }
+    return this.tasks();
+  });
+
+  injector = inject(Injector);
+
+  ngOnInit() {
+    const tasks = localStorage.getItem('tasks');
+    if (tasks) this.tasks.set(JSON.parse(tasks));
+    this.trackTasks();
+  }
+  trackTasks() {
+    effect(
+      () => {
+        const tasks = this.tasks();
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      },
+      { injector: this.injector }
+    );
+  }
+  changeHandler() {
+    if (this.newTaskCtrl.invalid || this.newTaskCtrl.value.trim() === '') {
+      return;
+    }
+    const value = this.newTaskCtrl.value;
+    this.addTask(value.trim());
+    this.newTaskCtrl.reset();
+  }
+  editHandler(index: number, event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    if (this.tasks()[index].completed || value.trim() === '') {
+      return;
+    }
+    // const value = this.updateTaskCtrl.value;
+    this.updateTask(index, value.trim());
+    // this.updateTask(value.trim());
   }
   addTask(title: string) {
     const newTask = {
@@ -47,6 +79,7 @@ export class HomeComponent {
       id: crypto.randomUUID(),
       title,
       completed: false,
+      editing: false,
     };
 
     this.tasks.update((tasks) => [newTask, ...tasks]);
@@ -67,7 +100,44 @@ export class HomeComponent {
       });
     });
   }
-  itemsLeft() {
-    return this.tasks().filter((task) => !task.completed).length;
+  clearCompleted() {
+    return this.tasks.update((tasks) =>
+      tasks.filter((task) => !task.completed)
+    );
+  }
+  editTask(index: number) {
+    this.tasks.update((tasks) => {
+      return tasks.map((task, i) => {
+        if (i === index) {
+          return {
+            ...task,
+            editing: !task.editing,
+          };
+        }
+        return {
+          ...task,
+          editing: false,
+        };
+      });
+    });
+  }
+
+  updateTask(index: number, title: string) {
+    this.tasks.update((tasks) => {
+      return tasks.map((task, i) => {
+        if (i === index) {
+          return {
+            ...task,
+            title,
+            editing: false,
+          };
+        }
+        return task;
+      });
+    });
+  }
+
+  changeFilter(filter: Tfilter) {
+    this.filter.set(filter);
   }
 }

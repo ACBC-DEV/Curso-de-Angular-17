@@ -5,5 +5,5 @@ import { LabsComponent } from './pages/labs/labs.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'labs', component: LabsComponent },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '404' },
 ];

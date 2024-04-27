@@ -4,11 +4,13 @@
       <h1>My Day</h1>
       <p>All my tasks in one place</p>
       <input
+        type="text"
+        minlength="3"
         class="new-todo"
-        (keydown.enter)="changeHandler($event)"
         placeholder="Type new todo"
         autofocus
-        type="text"
+        [formControl]="newTaskCtrl"
+        (keydown.enter)="changeHandler()"
       />
     </div>
   </header>
@@ -22,7 +24,36 @@
 
     <section class="main">
       <ul class="todo-list">
-        <li *ngFor="let task of tasks(); index as i">
+        @for (task of taskByFilter(); track $index) {
+        <li
+          [class.completed]="task.completed"
+          (dblclick)="editTask($index)"
+          [class.editing]="task.editing"
+        >
+          <div class="view">
+            <input
+              class="toggle"
+              type="checkbox"
+              [checked]="task.completed"
+              (click)="toggleCheck($index)"
+            />
+            <label>{{ task.title }}</label>
+            <button class="destroy" (click)="deleteTask($index)"></button>
+          </div>
+          <input
+            class="edit"
+            (keydown.enter)="editHandler($index, $event)"
+            [value]="task.title"
+          />
+        </li>
+        } @empty {
+        <li>
+          <div class="view">
+            <label>There are no tasks here</label>
+          </div>
+        </li>
+        }
+        <!-- <li *ngFor="let task of tasks(); index as i">
           <div class="view">
             <input
               class="toggle"
@@ -34,30 +65,47 @@
             <button class="destroy" (click)="deleteTask(i)"></button>
           </div>
           <input class="edit" value="{{ task.title }}" />
-        </li>
+        </li> -->
       </ul>
     </section>
     <!-- This footer should be hidden by default and shown when there are todos -->
+    @if (tasks().length > 0){
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
       <span class="todo-count" style="color: #333"
-        ><strong>{{ itemsLeft() }}</strong> @if(itemsLeft()>1){ items }@else {
-        item } left</span
-      >
+        ><strong>{{ taskByFilter().length }}</strong>
+        @if(taskByFilter().length){ items }@else { item }
+      </span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a routerLink="/" class="selected">All</a>
+          <a (click)="changeFilter('all')" [class.selected]="filter() === 'all'"
+            >All</a
+          >
         </li>
         <li>
-          <a routerLink="/pending">Pending</a>
+          <a
+            (click)="changeFilter('pending')"
+            [class.selected]="filter() === 'pending'"
+            >Pending</a
+          >
         </li>
         <li>
-          <a routerLink="/completed">Completed</a>
+          <a
+            (click)="changeFilter('completed')"
+            [class.selected]="filter() === 'completed'"
+            >Completed</a
+          >
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <button class="clear-completed" (click)="clearCompleted()">
+        Clear completed
+      </button>
     </footer>
+    }
   </div>
+  <!-- <div class="links">
+    <a href="/labs"> Labs</a>
+  </div> -->
 </section>
