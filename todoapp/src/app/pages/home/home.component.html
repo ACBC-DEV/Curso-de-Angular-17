@@ -24,7 +24,7 @@
 
     <section class="main">
       <ul class="todo-list">
-        @for (task of taskByFilter(); track $index) {
+        @for (task of taskByFilter(); track task.id;) {
         <li
           [class.completed]="task.completed"
           (dblclick)="editTask($index)"
@@ -35,7 +35,7 @@
               class="toggle"
               type="checkbox"
               [checked]="task.completed"
-              (click)="toggleCheck($index)"
+              (click)="toggleCheck(task.id)"
             />
             <label>{{ task.title }}</label>
             <button class="destroy" (click)="deleteTask($index)"></button>

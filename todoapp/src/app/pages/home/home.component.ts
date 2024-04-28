@@ -1,4 +1,4 @@
-import { CommonModule, NgFor } from '@angular/common';
+
 import {
   Component,
   computed,
@@ -13,7 +13,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -87,10 +87,10 @@ export class HomeComponent {
   deleteTask(index: number) {
     this.tasks.update((tasks) => tasks.filter((_, i) => i !== index));
   }
-  toggleCheck(index: number) {
+  toggleCheck(id: string) {
     this.tasks.update((tasks: Task[]) => {
-      return tasks.map((task, i) => {
-        if (i === index) {
+      return tasks.map((task) => {
+        if (task.id === id) {
           return {
             ...task,
             completed: !task.completed,

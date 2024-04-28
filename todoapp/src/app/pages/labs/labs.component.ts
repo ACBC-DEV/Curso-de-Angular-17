@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-labs',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css',
 })
