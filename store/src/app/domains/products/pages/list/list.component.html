@@ -1,10 +1,9 @@
-<div class="grid grid-cols-3 mx-40">
-  <!-- @for (item of items; track $index) {
-  <app-product
-    [title]="item.title"
-    [img]="item.images[0]"
-    [price]="item.price"
-    (addToCart)="fromChild($event)"
-  />
-  } -->
+<div class="container mx-auto">
+  <app-header [cart]="cart()" />
+
+  <div class="grid grid-cols-4">
+    @for (product of products(); track product.id) {
+    <app-product [product]="product" (addToCart)="addToCart($event)" />
+    }
+  </div>
 </div>

@@ -5,7 +5,6 @@ import { Component, Input, SimpleChanges, signal } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './counter.component.html',
-  styleUrl: './counter.component.css',
 })
 export class CounterComponent {
   @Input({ required: true }) duration: number = 0;

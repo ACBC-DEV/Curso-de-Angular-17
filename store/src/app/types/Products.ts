@@ -19,10 +19,11 @@ export type Product = {
   title: string;
   price: number;
   description: string;
-  category: {
+  category?: {
     id: number;
     name: string;
     image: string;
   };
   images: string[];
+  quantity?: number;
 };
