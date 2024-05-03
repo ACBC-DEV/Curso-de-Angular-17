@@ -24,6 +24,9 @@ export type Product = {
     name: string;
     image: string;
   };
+  creationAt: string;
+  updatedAt: string;
+  image?: string;
   images: string[];
   quantity?: number;
 };

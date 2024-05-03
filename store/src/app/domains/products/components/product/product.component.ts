@@ -1,10 +1,18 @@
+import {
+  CurrencyPipe,
+  DatePipe,
+  DecimalPipe,
+  UpperCasePipe,
+} from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TimeAgoPipe } from '@app/domains/shared/pipes/time-ago.pipe';
+
 import { Product } from '@app/types/Products';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [],
+  imports: [UpperCasePipe, CurrencyPipe, DatePipe, TimeAgoPipe],
   templateUrl: './product.component.html',
 })
 export class ProductComponent {

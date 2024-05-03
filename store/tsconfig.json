@@ -22,7 +22,10 @@
     "baseUrl": "./src",
     "paths": {
       "@app/*": ["app/*"],
-      "@domains/*": ["app/domains/*"]
+      "@domains/*": ["app/domains/*"],
+      "@shared/*": ["app/domains/shared/*"],
+      "@info/*": ["app/domains/info/*"],
+      "@products/*": ["app/domains/products/*"]
     }
   },
   "angularCompilerOptions": {

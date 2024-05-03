@@ -2,17 +2,16 @@
 
 <input type="text" [value]="message()" (change)="changeMessage($event)" /> -->
 
-<div class="px-10">
-  <h1 class="text-lg font-bold">About</h1>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui
-    architecto sint molestias ab nihil aspernatur unde est omnis rem, non
-    praesentium. Nisi culpa saepe, optio laboriosam dolorem officiis placeat.
-  </p>
-  <app-counter
-    [duration]="duration()"
-    [message]="message()"
-    *ngIf="duration() > 0"
-  />
-  <div><app-wave-audio audioUrl="assets/audio.wav" /></div>
-</div>
+<h1 class="text-lg font-bold">About</h1>
+<p>
+  Lorem ipsum dolor sit amet consecteturs
+  <span highlight> adipisicing elit. Voluptate qui</span>
+  architecto sint molestias ab nihil aspernatur unde est omnis rem, non
+  praesentium. Nisi culpa saepe, optio laboriosam dolorem officiis placeat.
+</p>
+<app-counter
+  [duration]="duration()"
+  [message]="message()"
+  *ngIf="duration() > 0"
+/>
+<div><app-wave-audio audioUrl="assets/audio.wav" /></div>

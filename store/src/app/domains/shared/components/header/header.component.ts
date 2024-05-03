@@ -1,30 +1,23 @@
-import { Component, Input, SimpleChanges, signal } from '@angular/core';
-import { Product } from '@app/types/Products';
+import { Component, inject, signal } from '@angular/core';
+
+import { CartService } from '../../services/cart.service';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [RouterLinkWithHref],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  @Input({ required: true }) cart: Product[] = [];
-  showTotalPrice = signal(false);
+  private cartService = inject(CartService);
+
   hideSideMenu = signal(true);
-  total = signal(0);
+
+  // total = signal(0);
+  cart = this.cartService.cart;
+  total = this.cartService.total;
   toggleSideMenu() {
     this.hideSideMenu.set(!this.hideSideMenu());
-  }
-  totalPrice() {
-    return this.cart.reduce(
-      (acc, product) => acc + product.price * (product.quantity ?? 1),
-      0
-    );
-  }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['cart']) {
-      this.showTotalPrice.set(this.cart.length > 0);
-      this.total.set(this.totalPrice());
-    }
   }
 }

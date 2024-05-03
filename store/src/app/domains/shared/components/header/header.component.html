@@ -14,17 +14,17 @@
       <ul class="flex space-x-6">
         <li>
           <a
-            href="#"
+            routerLink="/"
             class="block underline hover:underline"
             aria-current="page"
             >Home</a
           >
         </li>
         <li>
-          <a href="#" class="block hover:underline">About</a>
+          <a routerLink="/about" class="block hover:underline">About</a>
         </li>
         <li>
-          <a href="#" class="block hover:underline">Services</a>
+          <a routerLink="services" class="block hover:underline">Services</a>
         </li>
       </ul>
     </div>
@@ -33,7 +33,7 @@
         <div
           class="absolute w-4 h-4 text-xs text-white bg-black rounded -top-2 -left-2"
         >
-          {{ cart.length }}
+          {{ cart().length }}
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@
     </button>
   </div>
   <div class="flex flex-col gap-1 mt-5">
-    @for (item of cart; track 'cart-'+item.id ) {
+    @for (item of cart(); track 'cart-'+item.id ) {
     <div class="flex items-center justify-between gap-y-2">
       <div class="flex items-center gap-x-2">
         <img
@@ -93,7 +93,7 @@
     </div>
     }
   </div>
-  @if (showTotalPrice()) {
+  @if (cart().length > 0){
   <div>Total Price: {{ total() }}</div>
   }
 </div>
