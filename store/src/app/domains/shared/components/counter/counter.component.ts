@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, signal } from '@angular/core';
+import { Component, Input, SimpleChanges, input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
@@ -8,6 +8,7 @@ import { Component, Input, SimpleChanges, signal } from '@angular/core';
 })
 export class CounterComponent {
   @Input({ required: true }) duration: number = 0;
+
   @Input({ required: true }) message: string = '';
   counter = signal(0);
   counterRef: number | undefined;
@@ -20,11 +21,11 @@ export class CounterComponent {
   }
   ngOnChanges(chages: SimpleChanges) {
     // Before and During Render
-    console.log('ngOnChanges');
-    console.log('-'.repeat(20));
-    console.log(chages);
-    const duration = chages['duration'];
-    if (duration) this.doSomething(duration.currentValue);
+    // console.log('ngOnChanges');
+    // console.log('-'.repeat(20));
+    // console.log(chages);
+    // const duration = chages['duration'];
+    // if (duration) this.doSomething(duration.currentValue);
   }
   ngOnInit() {
     // After Render

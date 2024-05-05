@@ -13,9 +13,9 @@ import { HighlightDirective } from '@app/domains/shared/directives/highlight.dir
     HighlightDirective,
   ],
   templateUrl: './about.component.html',
-  styleUrl: './about.component.css',
+  styles: ``,
 })
-export class AboutComponent {
+export default class AboutComponent {
   duration = signal(1000);
   message = signal('Hello World');
   changeDuration(event: Event) {
