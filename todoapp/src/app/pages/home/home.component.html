@@ -16,18 +16,14 @@
   </header>
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
-    <!-- <pre>
-      <code>
-        {{ tasks() | json }}
-      </code>
-    </pre> -->
 
     <section class="main">
       <ul class="todo-list">
-        @for (task of taskByFilter(); track task.id;) {
-        <li
+        @for (task of taskFilter(); track task.id;) {
+        <app-todo [task]="task" [index]="$index" />
+        <!-- <li
           [class.completed]="task.completed"
-          (dblclick)="editTask($index)"
+          (dblclick)="editTask(task.id)"
           [class.editing]="task.editing"
         >
           <div class="view">
@@ -38,14 +34,14 @@
               (click)="toggleCheck(task.id)"
             />
             <label>{{ task.title }}</label>
-            <button class="destroy" (click)="deleteTask($index)"></button>
+           <button class="destroy" (click)="deleteTask(task.id)"></button>
           </div>
           <input
             class="edit"
-            (keydown.enter)="editHandler($index, $event)"
+            (keydown.enter)="editHandler($index, task.id, $event)"
             [value]="task.title"
           />
-        </li>
+        </li> -->
         } @empty {
         <li>
           <div class="view">
@@ -53,47 +49,36 @@
           </div>
         </li>
         }
-        <!-- <li *ngFor="let task of tasks(); index as i">
-          <div class="view">
-            <input
-              class="toggle"
-              type="checkbox"
-              [checked]="task.completed"
-              (click)="toggleCheck(i)"
-            />
-            <label>{{ task.title }}</label>
-            <button class="destroy" (click)="deleteTask(i)"></button>
-          </div>
-          <input class="edit" value="{{ task.title }}" />
-        </li> -->
       </ul>
     </section>
     <!-- This footer should be hidden by default and shown when there are todos -->
-    @if (tasks().length > 0){
+    @if (tasks.todos().length >0){
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
       <span class="todo-count" style="color: #333"
-        ><strong>{{ taskByFilter().length }}</strong>
-        @if(taskByFilter().length){ items }@else { item }
+        ><strong>{{ taskFilter().length }}</strong>
+        @if(taskFilter().length){ items }@else { item }
       </span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a (click)="changeFilter('all')" [class.selected]="filter() === 'all'"
+          <a
+            (click)="changeFilter('all')"
+            [class.selected]="todoFilter() === 'all'"
             >All</a
           >
         </li>
         <li>
           <a
             (click)="changeFilter('pending')"
-            [class.selected]="filter() === 'pending'"
+            [class.selected]="todoFilter() === 'pending'"
             >Pending</a
           >
         </li>
         <li>
           <a
             (click)="changeFilter('completed')"
-            [class.selected]="filter() === 'completed'"
+            [class.selected]="todoFilter() === 'completed'"
             >Completed</a
           >
         </li>

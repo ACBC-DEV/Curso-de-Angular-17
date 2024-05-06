@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -9,8 +8,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'todoapp';
-  welcom = 'Welcome todoApp';
-  tasks = ['First task', 'Second task', 'Third task'];
-}
+export class AppComponent {}
